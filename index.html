@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>BANG DIEM CUA EM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-400">
+  <div class="border-2 border-red-500 w-[700px] mx-auto mt-8 bg-gray-400 p-10">
+    <div class="text-center text-blue-600 text-5xl font-bold mb-8 tracking-wide">
+      BANG DIEM CUA EM
+    </div>
+    <form class="space-y-5" id="scoreForm" autocomplete="off" onsubmit="return false;">
+      <div>
+        <label for="semester1" class="block text-xl mb-2">Semester1:</label>
+        <input type="number" step="any" id="semester1"
+          class="w-full text-xl p-2 bg-white border-none outline-none" />
+      </div>
+      <div>
+        <label for="semester2" class="block text-xl mb-2">Semester2:</label>
+        <input type="number" step="any" id="semester2"
+          class="w-full text-xl p-2 bg-white border-none outline-none" />
+      </div>
+      <div>
+        <label for="year" class="block text-xl mb-2">Year:</label>
+        <select id="year"
+          class="w-full text-xl p-2 bg-white border-none outline-none text-red-600 font-bold">
+          <option value="" selected disabled>-- Chọn năm --</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+      <div>
+        <label for="summarise" class="block text-xl mb-2">Summarise:</label>
+        <input type="text" id="summarise" readonly
+          class="w-full text-xl p-2 bg-gray-100 border-none outline-none" />
+      </div>
+    </form>
+    <div id="xeploai" class="text-red-500 text-5xl font-bold mt-8 mb-4">&nbsp;</div>
+    <div class="flex justify-center gap-8 mt-4">
+      <button id="okBtn" type="button" class="text-xl px-8 py-2 bg-white border border-gray-400">OK</button>
+      <button type="button" class="text-xl px-8 py-2 bg-white border border-gray-400"
+        onclick="document.getElementById('scoreForm').reset();document.getElementById('summarise').value='';document.getElementById('xeploai').innerHTML='&nbsp;';">Cancel</button>
+    </div>
+  </div>
+  <script>
+    const s1 = document.getElementById('semester1');
+    const s2 = document.getElementById('semester2');
+    const year = document.getElementById('year');
+    const summarise = document.getElementById('summarise');
+    const xeploai = document.getElementById('xeploai');
+    const okBtn = document.getElementById('okBtn');
+
+    function calc() {
+      const val1 = parseFloat(s1.value);
+      const val2 = parseFloat(s2.value);
+      const y = year.value;
+      if (isNaN(val1) || isNaN(val2) || !y) {
+        summarise.value = '';
+        xeploai.innerHTML = '&nbsp;';
+        return;
+      }
+      let diem = 0;
+      if (y === '1') {
+        diem = (val1 + val2) / 2;
+      } else {
+        diem = (val1 + val2 * 2) / 3;
+      }
+      summarise.value = diem.toFixed(2);
+
+      let xl = '';
+      if (diem > 9) xl = 'Xuất sắc';
+      else if (diem >= 8) xl = 'Giỏi';
+      else xl = 'Trung bình';
+      xeploai.textContent = xl;
+    }
+
+    okBtn.onclick = calc;
+  </script>
+</body>
+</html>
